@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr Pastry | Creative Baking</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="fixed-logo">
+        <a href="#home">
+            <img src="logo.png" alt="Mr Pastry Logo">
+        </a>
+    </div>
+
+    <nav class="main-nav">
+        <ul>
+            <li><a href="#story">Story</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header id="home" class="hero-section"></header>
+
+    <section id="story" class="content-section">
+        <div class="container">
+            <h2 class="section-title">OUR STORY</h2>
+            <div class="story-text">
+                <p>Mr Pastry is a product development company based in Corsham, Wiltshire.</p> <br>
+                <p>We are Steve and Lyn Piercy and we make concept products from scratch, to a given brief, using only the very best ingredients.</p> <br>
+				<p>Between us we have experience of working in British and French bakeries, top notch restaurants and cafes.  We have significant experience in scale up, staff training, and Capex. </p>
+            </div>
+            <div class="story-image">
+                <img src="baking-oven.jpg" alt="Baking fresh bread">
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="content-section gallery-bg">
+        <div class="container">
+            <h2 class="section-title">GALLERY</h2>
+
+            <div class="slider-container">
+                <div class="main-slide">
+                    <img id="main-slide-img" src="bread.jpeg" alt="Gallery Image">
+                </div>
+
+                <!-- Thumbnails will be auto-generated -->
+                <div class="thumbnails" id="thumbnails"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="content-section">
+        <div class="container">
+            <h2 class="section-title">CONTACT</h2>
+            <p>Email: stevepiercy@mrpastry.co.uk</p>
+        </div>
+    </section>
+
+    <script>
+        const images = [
+            'bread.jpeg',
+            '009.jpeg',
+            'baking-oven.jpg',
+            '013.jpeg',
+            '015.jpeg',
+            'MP_010220_001.jpg',
+            'MP_010220_002.jpg',
+            'MP_010220_007.jpg'
+        ];
+
+        let currentIndex = 0;
+        const slideImg = document.getElementById('main-slide-img');
+        const thumbnailContainer = document.getElementById('thumbnails');
+
+        function updateSlide(index) {
+            slideImg.style.opacity = '0';
+            setTimeout(() => {
+                currentIndex = index;
+                slideImg.src = images[currentIndex];
+                slideImg.style.opacity = '1';
+                updateActiveThumbnail();
+            }, 300);
+        }
+
+        function updateActiveThumbnail() {
+            const thumbs = document.querySelectorAll('.thumbnails img');
+            thumbs.forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        function setSlide(index) {
+            updateSlide(index);
+        }
+
+        // Generate thumbnails dynamically
+        images.forEach((img, index) => {
+            const thumb = document.createElement('img');
+            thumb.src = img;
+            thumb.onclick = () => setSlide(index);
+            thumbnailContainer.appendChild(thumb);
+        });
+
+        // Auto-rotate
+        setInterval(() => {
+            let nextIndex = (currentIndex + 1) % images.length;
+            updateSlide(nextIndex);
+        }, 5000);
+
+        // Init
+        updateActiveThumbnail();
+    </script>
+
+</body>
+</html>
